@@ -67,4 +67,55 @@ func main() {
 	fmt.Println("Total: ", total)
 
 	f.Close()
+
+	part2()
+}
+
+func part2() {
+	fmt.Println("**************  Part 2 **************")
+	// Rock Paper Scissors
+	// Rock = 1
+	// Paper = 2
+	// Scissors = 3
+	// X = loose
+	// Y = Draw
+	// Z = Win
+
+	n := [][]rune{
+		{'A', 'X', '0', '3'},
+		{'A', 'Y', '3', '1'},
+		{'A', 'Z', '6', '2'},
+		{'B', 'X', '0', '1'},
+		{'B', 'Y', '3', '2'},
+		{'B', 'Z', '6', '3'},
+		{'C', 'X', '0', '2'},
+		{'C', 'Y', '3', '3'},
+		{'C', 'Z', '6', '1'}}
+
+	f, err := os.Open("./input.txt")
+	check(err)
+
+	r := bufio.NewReader(f)
+
+	total := 0
+
+	for {
+		s, err := Readln(r)
+		if err != nil {
+			break
+		}
+
+		for x := range n {
+			if s[0:1] == string(n[x][0]) && s[2:3] == string(+n[x][1]) {
+				a := n[x][2] - '0'
+				b := n[x][3] - '0'
+				fmt.Println("Match! Score: ", s[0:1], s[2:3], a, b, a+b)
+				total += int(a + b)
+			}
+		}
+	}
+
+	fmt.Println("Total: ", total)
+
+	f.Close()
 }
